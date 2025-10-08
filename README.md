@@ -372,7 +372,6 @@ Actual: 476,538 Bs
 Óptimo: 643,250 Bs
 Incremento: ((643,250 - 476,538) / 476,538) × 100 = 35%
 ```
-
 ---
 
 ## 🏆 Resultados Clave
@@ -423,76 +422,6 @@ Además de las mejoras numéricas, se logra:
 - ✅ **Sostenibilidad**: Incentivos a vehículos eléctricos
 - ✅ **Escalabilidad**: Modelo replicable en otros parqueos
 - ✅ **Data-driven**: Decisiones basadas en datos reales
-
----
-
-## 💻 Tecnologías Utilizadas
-
-### Frontend
-- **HTML5**: Estructura semántica
-- **CSS3**: Estilos modernos, gradientes, animaciones
-- **JavaScript ES6+**: Lógica de interacción, manipulación DOM
-
-### Visualización de Datos
-- **Chart.js v4.4.0**: Biblioteca de gráficos
-  - Gráficos de barras
-  - Gráficos de líneas
-  - Gráficos radar (multidimensional)
-
-### Hosting
-- **GitHub Pages**: Hosting estático gratuito
-
-### Herramientas de Desarrollo
-- **Git**: Control de versiones
-- **VS Code**: Editor de código
-- **Chrome DevTools**: Debugging y testing
-
-### Ventajas Técnicas
-
-✅ **Sin dependencias npm**: Carga directa desde CDN  
-✅ **Un solo archivo**: index.html autocontenido  
-✅ **Responsive**: Funciona en móviles y tablets  
-✅ **Rápido**: Carga en <2 segundos  
-✅ **SEO-friendly**: HTML semántico  
-
----
-
-## 🎮 Cómo Usar el Dashboard
-
-### Navegación Básica
-
-1. **Acceder al Dashboard**
-   - Abre el enlace: `https://TU-USUARIO.github.io/parkingzone-dashboard`
-   - Compatible con Chrome, Firefox, Safari, Edge
-
-2. **Cambiar entre Secciones**
-   - Clic en las pestañas superiores:
-     - 📊 Resumen Ejecutivo
-     - 📈 Comparación Escenarios
-     - 💰 Análisis Financiero
-     - ⚙️ Métricas Operacionales
-     - ✅ Recomendaciones
-
-3. **Interactuar con Gráficos**
-   - **Hover**: Pasa el mouse sobre elementos para ver detalles
-   - **Tooltip**: Aparece información exacta al posicionarte
-   - **Leyenda**: Clic en elementos de leyenda para mostrar/ocultar series
-
-### Tips de Uso
-
-💡 **Para Presentaciones**:
-- Inicia en "Resumen Ejecutivo" para contexto general
-- Navega a "Comparación" para mostrar alternativas
-- Termina en "Recomendaciones" con el plan de acción
-
-💡 **Para Análisis Detallado**:
-- Usa "Análisis Financiero" para justificación económica
-- Consulta "Métricas Operacionales" para indicadores técnicos
-
-💡 **Para Compartir**:
-- El enlace es permanente y estático
-- Funciona sin instalación
-- Accesible desde cualquier dispositivo
 
 ---
 
