@@ -17,10 +17,6 @@
 - [Estructura del Dashboard](#-estructura-del-dashboard)
 - [Guía de Interpretación](#-guía-de-interpretación)
 - [Resultados Clave](#-resultados-clave)
-- [Tecnologías Utilizadas](#-tecnologías-utilizadas)
-- [Cómo Usar el Dashboard](#-cómo-usar-el-dashboard)
-- [Instalación Local](#-instalación-local)
-- [Equipo](#-equipo)
 
 ---
 
