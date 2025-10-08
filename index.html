@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Simulación ParkingZone S.R.L.</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            background: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-weight: 600;
+        }
+
+        .tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .kpi-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .kpi-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .kpi-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .kpi-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .kpi-change {
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .kpi-change.positive {
+            color: #10b981;
+        }
+
+        .kpi-change.negative {
+            color: #ef4444;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .chart-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+        }
+
+        table {
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        tbody tr:hover {
+            background: #f3f4f6;
+        }
+
+        .highlight-row {
+            background: #d1fae5 !important;
+            font-weight: bold;
+        }
+
+        .recommendation-box {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-top: 30px;
+        }
+
+        .recommendation-box h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .recommendation-box p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .metric-item {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .metric-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .metric-value {
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2em;
+            color: white;
+        }
+
+        .scenario-selector {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .scenario-btn {
+            padding: 10px 20px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .scenario-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .scenario-btn.selected {
+            background: #667eea;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚗 Dashboard de Simulación - ParkingZone S.R.L.</h1>
+            <p class="subtitle">Análisis de 10 Etapas de Experimentación en Simulación</p>
+            <p class="subtitle">Período Analizado: Septiembre - Octubre 2025 (31 días, 4,852 registros)</p>
+        </header>
+
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('resumen')">📊 Resumen Ejecutivo</div>
+            <div class="tab" onclick="showTab('comparacion')">📈 Comparación Escenarios</div>
+            <div class="tab" onclick="showTab('financiero')">💰 Análisis Financiero</div>
+            <div class="tab" onclick="showTab('operacional')">⚙️ Métricas Operativas</div>
+            <div class="tab" onclick="showTab('recomendaciones')">✅ Recomendaciones</div>
+        </div>
+
+        <!-- RESUMEN EJECUTIVO -->
+        <div id="resumen" class="content-section active">
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: linear-gradient(135deg, #10b981, #059669);">💰</div>
+                    <div class="kpi-label">Incremento de Ingresos</div>
+                    <div class="kpi-value">+35%</div>
+                    <div class="kpi-change positive">+166,712 Bs/mes</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">👥</div>
+                    <div class="kpi-label">Mejora Ocupación</div>
+                    <div class="kpi-value">55.2%</div>
+                    <div class="kpi-change positive">+54.6% mejora</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">⏱️</div>
+                    <div class="kpi-label">Reducción Tiempo Espera</div>
+                    <div class="kpi-value">-85%</div>
+                    <div class="kpi-change positive">De 5.2 a 0.8 min</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">⭐</div>
+                    <div class="kpi-label">Satisfacción Cliente</div>
+                    <div class="kpi-value">9.2/10</div>
+                    <div class="kpi-change positive">+48.4% mejora</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">📊 Situación Actual vs Escenario Óptimo</div>
+                <div class="chart-wrapper">
+                    <canvas id="resumenChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">🏢 Ocupación por Piso - Comparativa</div>
+                <div class="chart-wrapper">
+                    <canvas id="ocupacionPisosChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMPARACIÓN ESCENARIOS -->
+        <div id="comparacion" class="content-section">
+            <div class="chart-container">
+                <div class="chart-title">📈 Comparación de Todos los Escenarios Simulados</div>
+                <div class="chart-wrapper">
+                    <canvas id="comparacionChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Escenario</th>
+                            <th>Ingresos (Bs)</th>
+                            <th>Ocupación (%)</th>
+                            <th>Tiempo Espera (min)</th>
+                            <th>Vehículos/mes</th>
+                            <th>Satisfacción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="escenarios-table">
+                        <!-- Se llenará con JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ANÁLISIS FINANCIERO -->
+        <div id="financiero" class="content-section">
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-label">Inversión Requerida</div>
+                    <div class="kpi-value">$110,000</div>
+                    <div class="kpi-change">Desembolso inicial</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Período de Recuperación</div>
+                    <div class="kpi-value">5.5 meses</div>
+                    <div class="kpi-change positive">ROI 557%</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">VAN (5 años)</div>
+                    <div class="kpi-value">8.2M Bs</div>
+                    <div class="kpi-change positive">Valor presente neto</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">TIR</div>
+                    <div class="kpi-value">285%</div>
+                    <div class="kpi-change positive">Tasa interna retorno</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">💵 Análisis de Rentabilidad por Escenario</div>
+                <div class="chart-wrapper">
+                    <canvas id="financieroChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">📊 Flujo de Caja Proyectado (12 meses)</div>
+                <div class="chart-wrapper">
+                    <canvas id="flujoChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- MÉTRICAS OPERACIONALES -->
+        <div id="operacional" class="content-section">
+            <div class="chart-container">
+                <div class="chart-title">⏱️ Tiempos de Espera por Escenario</div>
+                <div class="chart-wrapper">
+                    <canvas id="tiemposChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">🚗 Vehículos Atendidos vs Rechazados</div>
+                <div class="chart-wrapper">
+                    <canvas id="vehiculosChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">📈 Tasa de Ocupación - Evolución Proyectada</div>
+                <div class="chart-wrapper">
+                    <canvas id="ocupacionChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- RECOMENDACIONES -->
+        <div id="recomendaciones" class="content-section">
+            <div class="recommendation-box">
+                <h2>🎯 Recomendación Estratégica</h2>
+                <p><strong>Implementar el Escenario Óptimo Integral (ESC-5)</strong> en 3 fases durante 6 meses:</p>
+                
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <div class="metric-label">FASE 1 (Mes 1-2)</div>
+                        <div class="metric-value">$0</div>
+                        <div class="metric-label">Tarifas diferenciadas</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">FASE 2 (Mes 3-4)</div>
+                        <div class="metric-value">$45K</div>
+                        <div class="metric-label">Casetas + Automatización</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">FASE 3 (Mes 5-6)</div>
+                        <div class="metric-value">$65K</div>
+                        <div class="metric-label">Tecnología inteligente</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">TOTAL INVERSIÓN</div>
+                        <div class="metric-value">$110K</div>
+                        <div class="metric-label">Payback 5.5 meses</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">✅ Componentes de la Solución Óptima</div>
+                <div style="padding: 20px;">
+                    <h3 style="margin-bottom: 15px;">1. OPERACIÓN:</h3>
+                    <ul style="margin-bottom: 20px; line-height: 2;">
+                        <li>✅ 4 casetas con pago automatizado (0.75 min/vehículo)</li>
+                        <li>✅ Sistema de asignación automática de espacios</li>
+                    </ul>
+
+                    <h3 style="margin-bottom: 15px;">2. PRECIOS:</h3>
+                    <ul style="margin-bottom: 20px; line-height: 2;">
+                        <li>✅ Pisos 1-3: +25% sobre tarifa base</li>
+                        <li>✅ Pisos 4-8: -10% bajo tarifa base</li>
+                        <li>✅ Tarifa nocturna: 20 Bs/h (vs 15 Bs/h)</li>
+                        <li>✅ Motos: 4 Bs/h (vs 3 Bs/h)</li>
+                        <li>✅ Eléctricos: -15% en Piso 4</li>
+                    </ul>
+
+                    <h3 style="margin-bottom: 15px;">3. INFRAESTRUCTURA:</h3>
+                    <ul style="margin-bottom: 20px; line-height: 2;">
+                        <li>✅ 5 cubículos motos por piso (vs 10 actual)</li>
+                        <li>✅ 50 cubículos vehículos por piso (vs 45 actual)</li>
+                        <li>✅ Piso 4: Preferencia vehículos eléctricos</li>
+                    </ul>
+
+                    <h3 style="margin-bottom: 15px;">4. TECNOLOGÍA:</h3>
+                    <ul style="line-height: 2;">
+                        <li>✅ Sensores de ocupación en tiempo real</li>
+                        <li>✅ Señalización digital dinámica</li>
+                        <li>✅ App móvil con pre-pago</li>
+                        <li>✅ Dashboard gerencial analítico</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">⚠️ Matriz de Riesgos y Mitigación</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Riesgo</th>
+                            <th>Probabilidad</th>
+                            <th>Impacto</th>
+                            <th>Estrategia de Mitigación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Rechazo a precios premium</td>
+                            <td>Media</td>
+                            <td>Medio</td>
+                            <td>Implementación gradual, comunicación de valor</td>
+                        </tr>
+                        <tr>
+                            <td>Fallas técnicas sistema</td>
+                            <td>Baja</td>
+                            <td>Alto</td>
+                            <td>Plan contingencia manual, mantenimiento preventivo</td>
+                        </tr>
+                        <tr>
+                            <td>Menor adopción app</td>
+                            <td>Media</td>
+                            <td>Bajo</td>
+                            <td>Incentivos early-adopters, soporte 24/7</td>
+                        </tr>
+                        <tr>
+                            <td>Quejas por motos rechazadas</td>
+                            <td>Alta</td>
+                            <td>Bajo</td>
+                            <td>Comunicación clara, espacios alternativos</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Datos de simulación
+        const escenarios = [
+            { id: 'BASE', nombre: 'Actual (Baseline)', ingresos: 476538, ocupacion: 35.7, tiempoEspera: 5.2, vehiculos: 4852, satisfaccion: 6.2, costos: 85000 },
+            { id: '1A-2', nombre: '4 Casetas', ingresos: 478200, ocupacion: 36.1, tiempoEspera: 1.5, vehiculos: 4890, satisfaccion: 8.1, costos: 95000 },
+            { id: '1B-2', nombre: 'Pago Automático', ingresos: 480100, ocupacion: 36.8, tiempoEspera: 0.6, vehiculos: 4920, satisfaccion: 8.7, costos: 90000 },
+            { id: '2A-2', nombre: 'Tarifas Diferenciadas', ingresos: 562345, ocupacion: 46.5, tiempoEspera: 5.0, vehiculos: 5200, satisfaccion: 7.8, costos: 85000 },
+            { id: '3A-1', nombre: 'Menos Motos (5/piso)', ingresos: 548920, ocupacion: 42.3, tiempoEspera: 5.1, vehiculos: 5100, satisfaccion: 7.5, costos: 85000 },
+            { id: '5', nombre: 'ÓPTIMO INTEGRAL', ingresos: 643250, ocupacion: 55.2, tiempoEspera: 0.8, vehiculos: 6050, satisfaccion: 9.2, costos: 98000 }
+        ];
+
+        const ocupacionPorPiso = {
+            baseline: [53.4, 57.8, 46.1, 25.0, 27.4, 30.1, 27.7, 45.9],
+            optimo: [49.8, 51.2, 47.5, 58.4, 62.1, 57.8, 54.3, 60.5]
+        };
+
+        // Función para cambiar de tab
+        function showTab(tabName) {
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Llenar tabla de escenarios
+        const tableBody = document.getElementById('escenarios-table');
+        escenarios.forEach(esc => {
+            const row = document.createElement('tr');
+            if (esc.id === '5') row.classList.add('highlight-row');
+            
+            row.innerHTML = `
+                <td>${esc.nombre} ${esc.id === '5' ? '⭐' : ''}</td>
+                <td>${esc.ingresos.toLocaleString()}</td>
+                <td>${esc.ocupacion}%</td>
+                <td>${esc.tiempoEspera}</td>
+                <td>${esc.vehiculos.toLocaleString()}</td>
+                <td>${esc.satisfaccion}/10</td>
+            `;
+            tableBody.appendChild(row);
+        });
+
+        // Chart 1: Resumen
+        const ctxResumen = document.getElementById('resumenChart').getContext('2d');
+        new Chart(ctxResumen, {
+            type: 'bar',
+            data: {
+                labels: ['Ingresos (miles Bs)', 'Ocupación (%)', 'Satisfacción (x10)', 'Vehículos (miles)'],
+                datasets: [{
+                    label: 'Baseline',
+                    data: [476.5, 35.7, 62, 4.85],
+                    backgroundColor: 'rgba(148, 163, 184, 0.7)',
+                    borderColor: 'rgba(148, 163, 184, 1)',
+                    borderWidth: 2
+                }, {
+                    label: 'Óptimo',
+                    data: [643.3, 55.2, 92, 6.05],
+                    backgroundColor: 'rgba(16, 185, 129, 0.7)',
+                    borderColor: 'rgba(16, 185, 129, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top' },
+                    title: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // Chart 2: Ocupación por piso
+        const ctxOcupacion = document.getElementById('ocupacionPisosChart').getContext('2d');
+        new Chart(ctxOcupacion, {
+            type: 'line',
+            data: {
+                labels: ['Piso 1', 'Piso 2', 'Piso 3', 'Piso 4', 'Piso 5', 'Piso 6', 'Piso 7', 'Piso 8'],
+                datasets: [{
+                    label: 'Baseline',
+                    data: ocupacionPorPiso.baseline,
+                    borderColor: 'rgba(148, 163, 184, 1)',
+                    backgroundColor: 'rgba(148, 163, 184, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }, {
+                    label: 'Óptimo',
+                    data: ocupacionPorPiso.optimo,
+                    borderColor: 'rgba(16, 185, 129, 1)',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top' }
+                },
+                scales: {
+                    y: { 
+                        beginAtZero: true,
+                        max: 70,
+                        title: { display: true, text: 'Ocupación (%)' }
+                    }
+                }
+            }
+        });
+
+        // Chart 3: Comparación escenarios
+        const ctxComparacion = document.getElementById('comparacionChart').getContext('2d');
+        new Chart(ctxComparacion, {
+            type: 'bar',
+            data: {
+                labels: escenarios.map(e => e.nombre),
+                datasets: [{
+                    label: 'Ingresos (miles Bs)',
+                    data: escenarios.map(e => e.ingresos / 1000),
+                    backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                    yAxisID: 'y'
+                }, {
+                    label: 'Ocupación (%)',
+                    data: escenarios.map(e => e.ocupacion),
+                    backgroundColor: 'rgba(16, 185, 129, 0.7)',
+                    yAxisID: 'y1'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top' }
+                },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: { display: true, text: 'Ingresos (miles Bs)' }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        title: { display: true, text: 'Ocupación (%)' },
+                        grid: { drawOnChartArea: false }
+                    }
+                }
+            }
+        });
+
+        // Chart 4: Financiero
+        const ctxFinanciero = document.getElementById('financieroChart').getContext('2d');
+        new Chart(ctxFinanciero, {
+            type: 'line',
+            data: {
+                labels: escenarios.map(e => e.nombre),
+                datasets: [{
+                    label: 'Ingresos',
+                    data: escenarios.map(e => e.ingresos),
+                    borderColor: 'rgba(16, 185, 129, 1)',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4
+                }, {
+                    label: 'Costos',
+                    data: escenarios.map(e => e.costos),
+                    borderColor: 'rgba(239, 68, 68, 1)',
+                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    tension: 0.4
+                }, {
+                    label: 'Utilidad',
+                    data: escenarios.map(e => e.ingresos - e.costos),
+                    borderColor: 'rgba(99, 102, 241, 1)',
+                    backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                    tension: 0.4,
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top' }
+                },
+                scales: {
+                    y: { 
+                        beginAtZero: true,
+                        title: { display: true, text: 'Bolivianos (Bs)' }
+                    }
+                }
+            }
+        });
+
+        // Chart 5: Flujo de caja
+        const ctxFlujo = document.getElementById('flujoChart').getContext('2d');
+        const meses = ['Mes 1', 'Mes 2', 'Mes 3', 'Mes 4', 'Mes 5', 'Mes 6', 'Mes 7', 'Mes 8', 'Mes 9', 'Mes 10', 'Mes 11', 'Mes 12'];
+        const flujoBaseline = Array(12).fill(391.5);
+        const flujoOptimo = [-110, 480, 505, 520, 535, 545, 545, 545, 545, 545, 545, 545];
+        
+        new Chart(ctxFlujo, {
+            type: 'line',
+            data: {
+                labels: meses,
+                datasets: [{
+                    label: 'Baseline (acumulado)',
+                    data: flujoBaseline.map((v, i) => v * (i + 1)),
+                    borderColor: 'rgba(148, 163, 184, 1)',
+                    backgroundColor: 'rgba(148, 163, 184, 0.1)',
+                    tension: 0.4
+                }, {
+                    label: 'Óptimo (acumulado)',
+                    data: flujoOptimo.map((v, i, arr) => arr.slice(0, i + 1).reduce((a, b) => a + b, 0)),
+                    borderColor: 'rgba(16, 185, 129, 1)',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4,
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top' },
+                    title: { 
+                        display: true, 
+                        text: 'Punto de equilibrio en Mes 6 (Payback 5.5 meses)'
+                    }
+                },
+                scales: {
+                    y: { 
+                        title: { display: true, text: 'Flujo Acumulado (miles Bs)' }
+                    }
+                }
+            }
+        });
+
+        // Chart 6: Tiempos
+        const ctxTiempos = document.getElementById('tiemposChart').getContext('2d');
+        new Chart(ctxTiempos, {
+            type: 'bar',
+            data: {
+                labels: escenarios.map(e => e.nombre),
+                datasets: [{
+                    label: 'Tiempo de Espera (minutos)',
+                    data: escenarios.map(e => e.tiempoEspera),
+                    backgroundColor: escenarios.map(e => 
+                        e.tiempoEspera > 3 ? 'rgba(239, 68, 68, 0.7)' : 
+                        e.tiempoEspera > 1.5 ? 'rgba(245, 158, 11, 0.7)' : 
+                        'rgba(16, 185, 129, 0.7)'
+                    )
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { 
+                        beginAtZero: true,
+                        title: { display: true, text: 'Minutos' }
+                    }
+                }
+            }
+        });
+
+        // Chart 7: Vehículos
+        const ctxVehiculos = document.getElementById('vehiculosChart').getContext('2d');
+        new Chart(ctxVehiculos, {
+            type: 'bar',
+            data: {
+                labels: escenarios.map(e => e.nombre),
+                datasets: [{
+                    label: 'Vehículos Atendidos',
+                    data: escenarios.map(e => e.vehiculos),
+                    backgroundColor: 'rgba(16, 185, 129, 0.7)'
+                }, {
+                    label: 'Vehículos Rechazados (estimado)',
+                    data: [102, 98, 95, 105, 110, 90],
+                    backgroundColor: 'rgba(239, 68, 68, 0.7)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top' }
+                },
+                scales: {
+                    y: { 
+                        beginAtZero: true,
+                        title: { display: true, text: 'Número de Vehículos' }
+                    }
+                }
+            }
+        });
+
+        // Chart 8: Ocupación evolución
+        const ctxOcupacionEvol = document.getElementById('ocupacionChart').getContext('2d');
+        new Chart(ctxOcupacionEvol, {
+            type: 'line',
+            data: {
+                labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4', 'Semana 5', 'Semana 6', 'Semana 7', 'Semana 8'],
+                datasets: [{
+                    label: 'Baseline',
+                    data: [35.7, 35.9, 35.5, 36.1, 35.8, 35.6, 36.0, 35.7],
+                    borderColor: 'rgba(148, 163, 184, 1)',
+                    backgroundColor: 'rgba(148, 163, 184, 0.1)',
+                    tension: 0.4
+                }, {
+                    label: 'Con Mejoras (proyección)',
+                    data: [35.7, 38.5, 42.3, 46.8, 50.2, 53.1, 54.6, 55.2],
+                    borderColor: 'rgba(16, 185, 129, 1)',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4,
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top' }
+                },
+                scales: {
+                    y: { 
+                        beginAtZero: true,
+                        max: 60,
+                        title: { display: true, text: 'Ocupación (%)' }
+                    }
+                }
+            }
+        });
+
+        console.log('Dashboard cargado exitosamente ✅');
+    </script>
+</body>
+</html>
