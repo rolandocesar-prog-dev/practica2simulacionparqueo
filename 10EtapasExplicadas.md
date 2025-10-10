@@ -26,20 +26,6 @@ Esta primera fase establece los fundamentos del proyecto de simulación. Su obje
 
 ### ETAPA 1: Identificación del Problema y Definición de Objetivos
 
-#### Fundamentos Teóricos
-
-La primera etapa es crítica porque determina todo el trabajo posterior. Un problema mal definido llevará inevitablemente a un modelo inútil, sin importar cuán sofisticado sea técnicamente.
-
-**¿Qué es un problema?** Es una situación, dificultad o condición que impide alcanzar un estado deseado o que genera una necesidad de cambio. Representa una brecha entre la situación actual y una situación ideal. Es esencial distinguir entre el problema real y sus síntomas: por ejemplo, "las ganancias son bajas" es un síntoma, mientras que "la subutilización de la capacidad reduce los ingresos" es el problema subyacente.
-
-**¿Qué es un objetivo?** Es una meta o resultado específico que se desea alcanzar. Representa el estado deseado hacia el que se dirigen los esfuerzos y acciones. Los objetivos deben ser SMART: específicos, medibles, alcanzables, relevantes y temporales. Son fundamentales para planificar y medir el éxito de un proyecto.
-
-**Importancia de esta etapa:**
-- Permite determinar qué se va a modelar, qué aspecto del sistema interesa y cuáles son los límites
-- Facilita la asignación eficiente de tiempo, esfuerzo, datos y recursos, evitando desperdicio en aspectos irrelevantes
-- Marca los criterios de éxito: sin objetivos claros no se puede evaluar si un modelo cumple lo esperado
-- Ayuda a alinear expectativas de todos los participantes: clientes, tomadores de decisión y modeladores
-
 #### Aplicación al Proyecto ParkingZone S.R.L.
 
 **Contexto del Sistema:**  
@@ -86,24 +72,6 @@ ParkingZone S.R.L. es un parqueo privado de 8 pisos ubicado en el centro de Coch
 ---
 
 ### ETAPA 2: Definición de Salidas y Factores Experimentales
-
-#### Fundamentos Teóricos
-
-Esta etapa establece qué se medirá en el modelo y qué se podrá modificar experimentalmente. Es el puente entre los objetivos conceptuales y el modelo cuantitativo.
-
-**Componentes Principales:**
-
-**Factores Experimentales:** Son las variables que pueden cambiar para observar su efecto en el sistema. Representan las palancas de control o decisiones que los administradores pueden tomar. Cada factor puede tener múltiples niveles o valores posibles.
-
-**Variables de Salida (Respuesta):** Son los resultados que se miden para evaluar el desempeño del sistema. Deben estar directamente relacionadas con los objetivos del estudio. Permiten cuantificar el impacto de los cambios en los factores experimentales.
-
-**Diseño Factorial:** Es la combinación de todos los factores y niveles posibles. Un diseño completo prueba todas las combinaciones, mientras que un diseño fraccionado selecciona solo las más relevantes para reducir el número de experimentos.
-
-**Importancia:**
-- Define el espacio experimental: qué se puede modificar y qué se medirá
-- Establece la granularidad del estudio: cuántos niveles por factor determina la precisión
-- Permite planificar recursos: conocer cuántos experimentos se necesitan
-- Facilita el análisis estadístico posterior: con variables bien definidas se pueden aplicar técnicas analíticas apropiadas
 
 #### Aplicación al Proyecto ParkingZone S.R.L.
 
@@ -176,31 +144,6 @@ Se definió un diseño factorial fraccionado que combina los 8 factores en 19 es
 ---
 
 ### ETAPA 3: Diseño del Modelo Conceptual
-
-#### Fundamentos Teóricos
-
-El modelo conceptual es una representación abstracta y simplificada del sistema real que se desea simular. Sirve como un "mapa o plano" que describe los elementos clave del sistema, sus relaciones, restricciones y supuestos, pero sin estar todavía en lenguaje de programación. Es el puente entre el problema del mundo real y el modelo computacional.
-
-**Elementos de un Modelo Conceptual:**
-
-**Entidades o Componentes del Sistema:** Los objetos o agentes que participan en el sistema. Pueden ser activos (toman decisiones) o pasivos (son procesados).
-
-**Variables y Parámetros:** Características que describen el estado del sistema. Las variables cambian con el tiempo, los parámetros son constantes durante una corrida.
-
-**Relaciones Causales:** Cómo los componentes interactúan entre sí, qué causa qué, qué retroalimentaciones existen.
-
-**Flujos:** Movimiento de entidades, información o recursos a través del sistema.
-
-**Supuestos:** Simplificaciones deliberadas de la realidad para hacer el modelo manejable. Deben estar justificados y documentados.
-
-**Formas de Representación:**
-- Diagramas de flujo: Muestran secuencias de procesos
-- Diagramas de Forrester: Representan stocks, flujos y retroalimentaciones
-- Diagramas de bloques: Estructuran componentes y relaciones
-- Esquemas: Visualizan la arquitectura del sistema
-
-**Objetivo del Modelo Conceptual:**  
-Definir qué se incluirá en el modelo y qué se excluirá, para que sea manejable y útil. Es la traducción del problema real a un marco lógico que después se convertirá en un modelo de simulación ejecutable.
 
 #### Aplicación al Proyecto ParkingZone S.R.L.
 
@@ -314,52 +257,6 @@ Esta validación conceptual temprana es crucial para evitar construir un modelo 
 Esta segunda fase transforma el modelo conceptual en un modelo computacional funcional, asegurando que sea técnicamente correcto y que represente fielmente la realidad del sistema.
 
 ### ETAPA 4: Recolección y Análisis de Datos
-
-#### Fundamentos Teóricos
-
-Los datos son el combustible del modelo de simulación. Sin datos confiables, incluso el modelo mejor diseñado producirá resultados sin valor. Esta etapa se enfoca en obtener, validar y analizar la información necesaria para parametrizar el modelo.
-
-**Tipos de Datos Necesarios:**
-
-**Datos de Entrada:** Alimentan el modelo y generan comportamiento
-- Tasas de llegada de entidades
-- Distribuciones de tiempo de servicio
-- Probabilidades de eventos
-- Parámetros de distribuciones estadísticas
-
-**Datos de Validación:** Permiten comprobar que el modelo replica la realidad
-- Registros históricos de desempeño del sistema
-- Niveles de inventario observados
-- Tiempos de ciclo reales
-- Métricas operacionales medidas
-
-**Datos de Costos:** Necesarios para análisis económico
-- Costos operacionales
-- Costos de recursos
-- Tarifas y precios
-- Inversiones requeridas
-
-**Fuentes de Datos:**
-- Sistemas transaccionales (ERP, CRM, POS)
-- Sensores y dispositivos IoT
-- Registros manuales y bitácoras
-- Estudios de tiempos y movimientos
-- Entrevistas con operadores y expertos
-- Literatura técnica y benchmarks industriales
-
-**Análisis Estadístico de Datos:**
-- Análisis descriptivo: media, mediana, varianza, cuartiles
-- Identificación de distribuciones: pruebas de bondad de ajuste (Chi-cuadrado, Kolmogorov-Smirnov)
-- Detección de tendencias y estacionalidad
-- Identificación de outliers y datos anómalos
-- Análisis de correlaciones entre variables
-
-**Calidad de Datos:**
-- Completitud: ¿Están todos los datos necesarios?
-- Precisión: ¿Los datos son correctos?
-- Consistencia: ¿Hay contradicciones?
-- Actualidad: ¿Los datos son recientes y relevantes?
-- Representatividad: ¿Los datos capturan toda la variabilidad del sistema?
 
 #### Aplicación al Proyecto ParkingZone S.R.L.
 
@@ -486,34 +383,6 @@ Esta etapa de recolección y análisis de datos proporcionó los fundamentos cua
 
 ### ETAPA 5: Definición de las Especificaciones del Proyecto
 
-#### Fundamentos Teóricos
-
-Esta etapa consolida todos los elementos previos en un documento formal de especificaciones que guiará la construcción del modelo. Es el "contrato" entre lo que se modelará y lo que se espera obtener.
-
-**Componentes de las Especificaciones:**
-
-**Alcance del Modelo:** Define claramente qué incluye y qué excluye el modelo, estableciendo límites precisos del sistema a simular.
-
-**Supuestos y Simplificaciones:** Documenta todas las suposiciones hechas para facilitar el modelado, justificando cada una.
-
-**Parámetros y Valores:** Lista completa de todos los parámetros del modelo con sus valores, unidades y fuentes.
-
-**Requisitos Funcionales:** Qué debe hacer el modelo (cálculos, procesos, decisiones).
-
-**Requisitos No Funcionales:** Cómo debe comportarse (velocidad de ejecución, interfaz, documentación).
-
-**Criterios de Éxito:** Métricas concretas que determinarán si el modelo es aceptable.
-
-**Cronograma y Recursos:** Timeline del proyecto y recursos asignados (humanos, computacionales, presupuesto).
-
-**Entregables:** Documentos, código, presentaciones y otros productos esperados del proyecto.
-
-**Importancia:**
-- Alinea expectativas entre todas las partes interesadas
-- Previene cambios de alcance no controlados ("scope creep")
-- Facilita la gestión del proyecto y seguimiento de avance
-- Sirve como referencia para evaluación final del éxito
-
 #### Aplicación al Proyecto ParkingZone S.R.L.
 
 **Alcance Definido:**
@@ -602,37 +471,6 @@ Esta etapa estableció un marco claro y detallado que guió todo el trabajo post
 ---
 
 ### ETAPA 6: Diseño y Construcción del Modelo
-
-#### Fundamentos Teóricos
-
-Esta es la etapa donde el modelo conceptual se transforma en un modelo ejecutable. Es el trabajo de ingeniería de simulación propiamente dicho.
-
-**Actividades Principales:**
-
-**Definir Variables y Parámetros:** Identificar variables de estado, entradas, salidas y constantes; establecer unidades, rangos y relaciones matemáticas precisas.
-
-**Formular Ecuaciones y Lógica:** Traducir las relaciones causales en ecuaciones, algoritmos y reglas de decisión que el computador pueda ejecutar.
-
-**Seleccionar el Tipo de Modelo:**
-- Determinístico vs Estocástico
-- Continuo vs Discreto
-- Basado en eventos, procesos o agentes
-- Estático vs Dinámico
-
-**Implementar en Software:** Construir el modelo en la plataforma de simulación elegida, programando todos los componentes y su interacción.
-
-**Integrar Componentes:** Reunir todos los módulos (generación, asignación, servicio, salida) asegurando que entradas, procesos y salidas estén correctamente conectados.
-
-**Documentar el Modelo:** Registrar decisiones de diseño, supuestos, ecuaciones y estructura. Fundamental para mantenibilidad y comprensión futura.
-
-**Pruebas Preliminares:** Ejecutar simulaciones de prueba para detectar errores obvios antes de la verificación formal.
-
-**Principios de Buen Diseño:**
-- **Modularidad:** Dividir el modelo en componentes independientes
-- **Claridad:** Código legible con nombres descriptivos
-- **Eficiencia:** Optimizar para tiempo de ejecución razonable
-- **Flexibilidad:** Facilitar cambios de parámetros sin reescribir código
-- **Robustez:** Manejar casos extremos sin fallar
 
 #### Aplicación al Proyecto ParkingZone S.R.L.
 
@@ -751,43 +589,6 @@ Todas las pruebas pasaron satisfactoriamente antes de proceder a la verificació
 ---
 
 ### ETAPA 7: Validación y Verificación
-
-#### Fundamentos Teóricos
-
-Esta etapa asegura que el modelo es correcto técnicamente y representa fielmente la realidad. Son dos procesos complementarios pero distintos:
-
-**Verificación - "¿Está bien hecho el modelo?"**
-- Pregunta: ¿El modelo funciona internamente de manera correcta, sin errores de programación o lógica?
-- Enfoque: Técnico, revisión de código y lógica interna
-- Objetivo: Modelo libre de bugs y errores matemáticos
-
-**Actividades de Verificación:**
-- Revisar ecuaciones, flujos y bucles de retroalimentación
-- Comprobar coherencia de unidades (minutos con minutos, no mezclar con horas)
-- Detectar errores lógicos (condiciones imposibles, divisiones por cero)
-- Verificar que las variables cambien coherentemente en el tiempo
-- Realizar pruebas de consistencia con valores extremos
-- Comprobar estabilidad numérica del modelo
-
-**Validación - "¿Representa correctamente la realidad?"**
-- Pregunta: ¿El modelo replica fielmente el comportamiento del sistema real para los propósitos del estudio?
-- Enfoque: Comparación con la realidad, consulta con expertos
-- Objetivo: Modelo aceptado como representación suficientemente precisa
-
-**Actividades de Validación:**
-- Comparar resultados del modelo con datos históricos o empíricos
-- Consultar expertos del dominio para evaluar coherencia
-- Analizar si las tendencias del modelo coinciden con las observadas
-- Simular escenarios conocidos y verificar reproducción de resultados
-- Validación de cara (face validity): ¿Los resultados "tienen sentido"?
-- Análisis de sensibilidad: ¿Cambios en inputs producen cambios razonables en outputs?
-
-**Importancia:**
-- Sin verificación: El modelo puede tener errores que invaliden todos los resultados
-- Sin validación: El modelo puede ser técnicamente perfecto pero inútil para representar la realidad
-- Ambos son necesarios para credibilidad y confianza en los resultados
-
-**Pregunta Clave:** ¿Confiaría en un modelo que predice el futuro de su negocio sin verificar que sus datos y ecuaciones son correctos? La verificación y validación son esenciales para garantizar credibilidad.
 
 #### Aplicación al Proyecto ParkingZone S.R.L.
 
@@ -909,40 +710,6 @@ El modelo está verificado (libre de errores técnicos) y validado (representa a
 Esta fase final utiliza el modelo validado para explorar escenarios, generar insights y formular recomendaciones accionables.
 
 ### ETAPA 8: Diseño de Experimentos
-
-#### Fundamentos Teóricos
-
-El diseño de experimentos determina qué configuraciones del modelo se probarán, cómo se variarán los factores y cómo se compararán los resultados. Un buen diseño maximiza la información obtenida con el mínimo número de corridas.
-
-**Objetivo:** Definir un plan experimental formal que indique:
-- Qué variables se probarán
-- Cuántas corridas se harán
-- Qué escenarios se compararán
-- Qué métricas se analizarán
-
-**Tipos de Diseño Experimental:**
-
-**Diseño Factorial Completo:** Prueba todas las combinaciones de todos los niveles de todos los factores. Para k factores con n niveles cada uno: n^k experimentos. Ventaja: información completa. Desventaja: puede ser intratable para muchos factores.
-
-**Diseño Factorial Fraccionado:** Selecciona un subconjunto estratégico de combinaciones que permite estimar efectos principales e interacciones clave. Reduce dramáticamente el número de experimentos manteniendo información útil.
-
-**Diseño de Escenarios:** Define situaciones específicas de interés (pesimista, esperado, optimista) en lugar de exploración sistemática. Útil cuando hay combinaciones particularmente relevantes.
-
-**Diseño Secuencial:** Empieza con pocos experimentos, analiza resultados y decide siguientes experimentos basándose en hallazgos. Eficiente pero requiere análisis intermedio.
-
-**Consideraciones Clave:**
-
-**Número de Réplicas:** Cada escenario debe correrse múltiples veces con diferentes semillas aleatorias para:
-- Estimar variabilidad de resultados
-- Construir intervalos de confianza
-- Realizar pruebas de hipótesis estadísticas
-- El número de réplicas depende de la variabilidad del sistema y precisión deseada
-
-**Período de Calentamiento (Warm-up):** Tiempo simulado inicial cuyos resultados se descartan para permitir que el sistema alcance estado estacionario. Evita sesgos de condiciones iniciales arbitrarias.
-
-**Longitud de Corrida:** Debe ser suficientemente larga para que el sistema muestre su comportamiento típico y se obtengan estimaciones estables de las métricas.
-
-**Métricas de Comparación:** Definir claramente qué se medirá para comparar escenarios (una o múltiples métricas, con sus ponderaciones si se usa un índice compuesto).
 
 #### Aplicación al Proyecto ParkingZone S.R.L.
 
@@ -1076,42 +843,6 @@ Esta matriz sirvió como guía durante la ejecución y facilitó la interpretaci
 ---
 
 ### ETAPA 9: Ejecución de Experimentos y Análisis de Resultados
-
-#### Fundamentos Teóricos
-
-Esta etapa pone en marcha el plan experimental y procesa los datos generados para extraer conclusiones significativas.
-
-**Subetapas:**
-
-**1. Ejecución de Simulaciones:** Correr el modelo múltiples veces según el diseño experimental, asegurando que cada corrida se ejecute correctamente y registre todos los datos necesarios.
-
-**2. Recolección de Datos:** Almacenar los resultados de cada réplica de forma organizada, típicamente en archivos o bases de datos estructuradas.
-
-**3. Análisis Estadístico:** Aplicar técnicas estadísticas para:
-- Calcular medidas de tendencia central (promedios)
-- Estimar variabilidad (desviaciones estándar, intervalos de confianza)
-- Realizar pruebas de hipótesis (¿son las diferencias estadísticamente significativas?)
-- Identificar factores más influyentes
-- Detectar interacciones entre factores
-
-**4. Comparación de Escenarios:** Contrastar resultados entre configuraciones para identificar cuál(es) cumplen mejor los objetivos.
-
-**5. Análisis de Estabilidad:** Verificar que el sistema simulado alcanza estado estacionario y que los resultados son robustos.
-
-**6. Visualización de Resultados:** Crear gráficos, tablas y dashboards que comuniquen hallazgos de forma clara y accionable.
-
-**Técnicas Estadísticas Comunes:**
-- Intervalos de confianza para estimación de parámetros
-- ANOVA (Analysis of Variance) para comparar múltiples escenarios
-- Pruebas t para comparar pares de escenarios
-- Regresión para modelar relaciones entre factores y respuestas
-- Análisis de sensibilidad para cuantificar importancia de factores
-
-**Importancia:**
-- Transforma datos crudos en insights accionables
-- Cuantifica incertidumbre de recomendaciones
-- Identifica cuáles cambios tienen mayor impacto
-- Comunica resultados de forma comprensible para tomadores de decisión
 
 #### Aplicación al Proyecto ParkingZone S.R.L.
 
@@ -1286,58 +1017,6 @@ Se creó un dashboard interactivo con:
 ---
 
 ### ETAPA 10: Complementación e Implementación del Proyecto
-
-#### Fundamentos Teóricos
-
-La etapa final consolida todo el trabajo previo y lo traduce en acciones concretas que generan valor real. Es donde el proyecto de simulación pasa de ser un ejercicio analítico a una herramienta de transformación empresarial.
-
-**Propósito Principal:**  
-Asegurar que el modelo final pueda generar resultados útiles y confiables para el análisis y la toma de decisiones, y que esas decisiones se traduzcan en cambios efectivos en el sistema real.
-
-**Actividades Principales:**
-
-**1. Consolidación de Recomendaciones**
-- Traducir hallazgos técnicos en lenguaje empresarial
-- Priorizar acciones según impacto y factibilidad
-- Cuantificar beneficios esperados y riesgos
-- Definir métricas de éxito para la implementación
-
-**2. Desarrollo de Plan de Implementación**
-- Secuenciar las mejoras (qué primero, qué después)
-- Establecer responsables y plazos
-- Identificar recursos necesarios (presupuesto, personal, tiempo)
-- Planificar capacitación y gestión del cambio
-
-**3. Análisis de Riesgos y Mitigación**
-- Identificar qué podría salir mal
-- Evaluar probabilidad e impacto de riesgos
-- Diseñar estrategias de mitigación
-- Preparar planes de contingencia
-
-**4. Documentación Integral**
-- Informe técnico completo del proyecto
-- Documentación del modelo para mantenimiento futuro
-- Manuales de uso de herramientas desarrolladas
-- Lecciones aprendidas y mejores prácticas
-
-**5. Transferencia de Conocimiento**
-- Capacitar al personal que usará el modelo
-- Presentar resultados a stakeholders
-- Establecer procedimientos de actualización del modelo
-- Definir métricas de monitoreo continuo
-
-**6. Seguimiento Post-Implementación**
-- Monitorear métricas clave después de implementar cambios
-- Comparar resultados reales vs predicciones del modelo
-- Ajustar el modelo si se detectan discrepancias
-- Documentar desviaciones y sus causas
-
-**Objetivo Final:**  
-Al finalizar esta etapa, la organización debe tener:
-- Modelo operativo y documentado
-- Plan de acción claro y aprobado
-- Herramientas para monitoreo continuo
-- Capacidad interna para mantener y actualizar el modelo
 
 #### Aplicación al Proyecto ParkingZone S.R.L.
 
